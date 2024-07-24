@@ -11,14 +11,15 @@ import { HttpsProxyAgent } from "https-proxy-agent"
 import fetch from "node-fetch"
 import { z } from "zod"
 
-const baseUrl = process.env.COMPONENTS_REGISTRY_URL ?? "https://ui.shadcn.com"
+const baseUrl =
+  process.env.COMPONENTS_REGISTRY_URL ?? "https://registries-nine.vercel.app"
 const agent = process.env.https_proxy
   ? new HttpsProxyAgent(process.env.https_proxy)
   : undefined
 
 export async function getRegistryIndex() {
   try {
-    const [result] = await fetchRegistry(["index.json"])
+    const [result] = await fetchRegistry(["registries"])
 
     return registryIndexSchema.parse(result)
   } catch (error) {
