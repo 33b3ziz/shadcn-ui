@@ -29,7 +29,7 @@ export async function getRegistryIndex() {
 
 export async function getRegistryStyles() {
   try {
-    const [result] = await fetchRegistry(["styles/index.json"])
+    const [result] = await fetchRegistry(["styles"])
 
     return stylesSchema.parse(result)
   } catch (error) {
@@ -64,7 +64,7 @@ export async function getRegistryBaseColors() {
 
 export async function getRegistryBaseColor(baseColor: string) {
   try {
-    const [result] = await fetchRegistry([`colors/${baseColor}.json`])
+    const [result] = await fetchRegistry([`${baseColor}`])
 
     return registryBaseColorSchema.parse(result)
   } catch (error) {
@@ -104,7 +104,7 @@ export async function fetchTree(
   tree: z.infer<typeof registryIndexSchema>
 ) {
   try {
-    const paths = tree.map((item) => `styles/${style}/${item.name}.json`)
+    const paths = tree.map((item) => `${item.name}`)
     const result = await fetchRegistry(paths)
 
     return registryWithContentSchema.parse(result)
@@ -141,7 +141,7 @@ async function fetchRegistry(paths: string[]) {
   try {
     const results = await Promise.all(
       paths.map(async (path) => {
-        const response = await fetch(`${baseUrl}/registry/${path}`, {
+        const response = await fetch(`${baseUrl}/${path}`, {
           agent,
         })
         return await response.json()
