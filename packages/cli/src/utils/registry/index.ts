@@ -12,7 +12,8 @@ import fetch from "node-fetch"
 import { z } from "zod"
 
 const baseUrl =
-  process.env.COMPONENTS_REGISTRY_URL ?? "https://registries-nine.vercel.app"
+  process.env.COMPONENTS_REGISTRY_URL ??
+  "https://registries-production.up.railway.app"
 const agent = process.env.https_proxy
   ? new HttpsProxyAgent(process.env.https_proxy)
   : undefined
